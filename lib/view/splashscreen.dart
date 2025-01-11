@@ -1,5 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:quadbtech_test/view/homescreen.dart';
+import 'package:quadbtech_test/view/bottomnav.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -11,16 +12,20 @@ class Splashscreen extends StatefulWidget {
 class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
-    _navigateToHome();
+    //_navigateToHome();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => _navigateToHome(),
+    );
     super.initState();
   }
 
-  void _navigateToHome() async {
-    await Future.delayed(const Duration(seconds: 3)); // Splash screen duration
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const Homescreen()),
-    );
+  void _navigateToHome() {
+    Timer(
+        const Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => BottomNav()),
+            ));
   }
 
   @override
@@ -32,8 +37,7 @@ class _SplashscreenState extends State<Splashscreen> {
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/splashscreenimage.png"))),
-            child: const Padding(
-              padding: EdgeInsets.only(top: 300, left: 135),
+            child: const Center(
               child: Text(
                 "Welcome!",
                 style: TextStyle(color: Colors.red, fontSize: 30),
